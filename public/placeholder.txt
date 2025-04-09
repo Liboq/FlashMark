@@ -1,0 +1,2 @@
+This file is a placeholder to ensure the public directory exists in version control.
+You can delete this file once you've added actual resources to the public directory. 

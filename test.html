@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlashMark - Test UI</title>
+  <link rel="stylesheet" href="src/assets/main.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    
+    .mockup-container {
+      width: 440px;
+      height: 560px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background-color: #f7f7f7;
+    }
+    
+    /* Test data for UI preview */
+    .test-bookmark-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .test-bookmark-item:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .test-bookmark-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 12px;
+    }
+    
+    .test-bookmark-title {
+      font-size: 14px;
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .keyboard-shortcuts {
+      position: fixed;
+      bottom: 20px;
+      text-align: center;
+      width: 100%;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .keyboard-shortcuts kbd {
+      background-color: #f7f7f7;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+      color: #333;
+      display: inline-block;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1;
+      padding: 3px 5px;
+      margin: 0 3px;
+    }
+    
+    /* Demo animations */
+    .demo-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: ripple 0.6s linear infinite;
+      pointer-events: none;
+      top: 50%;
+      left: 50%;
+    }
+    
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mockup-container">
+    <div class="container">
+      <div class="header-section">
+        <header class="header">
+          <h1>Quick bookmarks retrieval</h1>
+          <p>Liboq制作 Wechat: Liboq666</p>
+        </header>
+        
+        <div class="search-box">
+          <!-- Search icon with pulse animation -->
+          <span class="search-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search..." 
+            id="demoSearchInput"
+          />
+          
+          <!-- Filter icon with hover effect -->
+          <span class="filter-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+          </span>
+          
+          <!-- Demo ripple effect -->
+          <span class="demo-ripple"></span>
+        </div>
+      </div>
+      
+      <div class="content-section">
+        <div id="bookmarksList" class="bookmarks-list">
+          <!-- Test bookmark items -->
+          <div class="bookmark-item" data-title="Google" data-url="https://google.com">
+            <img 
+              src="https://www.google.com/s2/favicons?domain=google.com&sz=32" 
+              class="bookmark-icon" 
+              alt="Google"
+            />
+            <span class="bookmark-title">Google</span>
+          </div>
+          
+          <div class="bookmark-item" data-title="GitHub" data-url="https://github.com">
+            <img 
+              src="https://www.google.com/s2/favicons?domain=github.com&sz=32" 
+              class="bookmark-icon" 
+              alt="GitHub"
+            />
+            <span class="bookmark-title">GitHub</span>
+          </div>
+          
+          <div class="bookmark-item" data-title="YouTube" data-url="https://youtube.com">
+            <img 
+              src="https://www.google.com/s2/favicons?domain=youtube.com&sz=32" 
+              class="bookmark-icon" 
+              alt="YouTube"
+            />
+            <span class="bookmark-title">YouTube</span>
+          </div>
+          
+          <!-- Example with long title and tooltip -->
+          <div class="bookmark-item" data-title="Stack Overflow Documentation for Developers" data-url="https://stackoverflow.com">
+            <img 
+              src="https://www.google.com/s2/favicons?domain=stackoverflow.com&sz=32" 
+              class="bookmark-icon" 
+              alt="Stack Overflow Documentation for Developers"
+            />
+            <span class="bookmark-title">Stack Overflow Documentation for Developers</span>
+            <!-- Tooltip example -->
+            <div class="tooltip">Stack Overflow Documentation for Developers</div>
+          </div>
+          
+          <div class="bookmark-item" data-title="Twitter" data-url="https://twitter.com">
+            <img 
+              src="https://www.google.com/s2/favicons?domain=twitter.com&sz=32" 
+              class="bookmark-icon" 
+              alt="Twitter"
+            />
+            <span class="bookmark-title">Twitter</span>
+          </div>
+          
+          <!-- Example of missing icon with fallback -->
+          <div class="bookmark-item" data-title="Netflix" data-url="https://netflix.com">
+            <div class="default-icon">N</div>
+            <span class="bookmark-title">Netflix</span>
+          </div>
+          
+          <div class="bookmark-item" data-title="Amazon" data-url="https://amazon.com">
+            <img 
+              src="https://www.google.com/s2/favicons?domain=amazon.com&sz=32" 
+              class="bookmark-icon" 
+              alt="Amazon"
+            />
+            <span class="bookmark-title">Amazon</span>
+          </div>
+          
+          <!-- Another example with long title -->
+          <div class="bookmark-item" data-title="Facebook - Connect with friends and the world" data-url="https://facebook.com">
+            <img 
+              src="https://www.google.com/s2/favicons?domain=facebook.com&sz=32" 
+              class="bookmark-icon" 
+              alt="Facebook - Connect with friends and the world"
+            />
+            <span class="bookmark-title">Facebook - Connect with friends and the world</span>
+            <div class="tooltip">Facebook - Connect with friends and the world</div>
+          </div>
+          
+          <!-- Another example with missing icon -->
+          <div class="bookmark-item" data-title="LinkedIn" data-url="https://linkedin.com">
+            <div class="default-icon">L</div>
+            <span class="bookmark-title">LinkedIn</span>
+          </div>
+        </div>
+        
+        <!-- Empty state (hidden by default) -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+          <p id="emptyStateText">No bookmarks found matching your search</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="keyboard-shortcuts">
+    Press <kbd>Ctrl</kbd>+<kbd>B</kbd> to open | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> to open and focus search
+  </div>
+  
+  <script>
+    // Demo to focus the search input when clicking on it
+    const searchInput = document.getElementById('demoSearchInput');
+    const bookmarksList = document.getElementById('bookmarksList');
+    const emptyState = document.getElementById('emptyState');
+    const emptyStateText = document.getElementById('emptyStateText');
+    const bookmarkItems = document.querySelectorAll('.bookmark-item');
+    
+    searchInput.addEventListener('focus', function() {
+      // Show the ripple effect
+      const existingRipples = document.querySelectorAll('.demo-ripple');
+      existingRipples.forEach(ripple => ripple.remove());
+      
+      const searchBox = document.querySelector('.search-box');
+      const ripple = document.createElement('span');
+      ripple.classList.add('demo-ripple');
+      searchBox.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+    
+    // Demo search functionality
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase().trim();
+      let matchCount = 0;
+      
+      // For demo purposes
+      console.log('Search term:', searchTerm);
+      
+      bookmarkItems.forEach(item => {
+        const title = item.getAttribute('data-title').toLowerCase();
+        const url = item.getAttribute('data-url').toLowerCase();
+        
+        if (title.includes(searchTerm) || url.includes(searchTerm) || searchTerm === '') {
+          item.style.display = 'flex';
+          matchCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      
+      // Toggle empty state
+      if (matchCount === 0 && searchTerm !== '') {
+        bookmarksList.style.display = 'none';
+        emptyState.style.display = 'flex';
+        emptyStateText.textContent = `No bookmarks found matching "${searchTerm}"`;
+      } else {
+        emptyState.style.display = 'none';
+      }
+      
+      console.log('Matches found:', matchCount);
+    });
+  </script>
+</body>
+</html> 

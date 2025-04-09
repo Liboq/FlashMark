@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "FlashMark",
+  "version": "1.0.0",
+  "description": "Fast access to your bookmarks - by Liboq (WeChat: Liboq666)",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.jpeg",
+      "48": "icons/icon48.jpeg",
+      "128": "icons/icon128.jpeg"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.jpeg",
+    "48": "icons/icon48.jpeg",
+    "128": "icons/icon128.jpeg"
+  },
+  "permissions": [
+    "bookmarks",
+    "tabs"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+} 

@@ -1,0 +1,68 @@
+{
+  "manifest_version": 3,
+  "name": "FlashMark",
+  "version": "1.1.0",
+  "description": "快速搜索与访问您的所有书签 - by Liboq (WeChat: Liboq666)",
+  "author": "Liboq",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.jpeg",
+      "48": "icons/icon48.jpeg",
+      "128": "icons/icon128.jpeg"
+    },
+    "default_title": "书签速查 - 点击打开"
+  },
+  "icons": {
+    "16": "icons/icon16.jpeg", 
+    "48": "icons/icon48.jpeg",
+    "128": "icons/icon128.jpeg"
+  },
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "bookmarks",
+    "tabs",
+    "storage",
+    "notifications",
+    "contextMenus"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      },
+      "description": "打开书签速查插件"
+    },
+    "quick_search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+B",
+        "mac": "Command+Shift+B"
+      },
+      "description": "打开插件并聚焦到搜索框"
+    },
+    "open_popup": {
+      "description": "打开书签速查弹窗"
+    }
+  },
+  "omnibox": {
+    "keyword": "bm"
+  },
+  "homepage_url": "https://github.com/liboq/quick-bookmarksretrieval",
+  "offline_enabled": true,
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/*.png"
+      ],
+      "matches": ["<all_urls>"],
+      "extension_ids": ["*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+} 
