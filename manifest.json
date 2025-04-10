@@ -27,7 +27,8 @@
     "tabs",
     "storage",
     "notifications",
-    "contextMenus"
+    "contextMenus",
+    "clipboardWrite"
   ],
   "commands": {
     "_execute_action": {

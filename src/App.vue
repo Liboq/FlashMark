@@ -3,31 +3,51 @@
     <div class="header-section">
       <div class="header">
         <h1>FlashMark</h1>
-        <p v-if="!loading && !error">
-          找到 {{ filteredBookmarks.length }} 个书签，共 {{ bookmarks.length }} 个
-        </p>
+        <p
+          v-if="!loading && !error"
+        >找到 {{ filteredBookmarks.length }} 个书签，共 {{ bookmarks.length }} 个</p>
         <p v-else>使用此插件快速搜索您的书签</p>
       </div>
-      
+
       <div class="search-box" @click="createRipple">
         <div class="search-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
         </div>
-        <input 
-          v-model="searchText" 
-          class="search-input" 
-          type="text" 
-          placeholder="搜索书签..." 
+        <input
+          v-model="searchText"
+          class="search-input"
+          type="text"
+          placeholder="搜索书签..."
           ref="searchInput"
           @input="debounceSearch"
           @keydown.enter="openFirstResult"
         />
         <div class="filter-icon" @click.stop="toggleSearchMode">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
           </svg>
         </div>
       </div>
@@ -42,10 +62,20 @@
 
       <!-- 错误状态 -->
       <div v-else-if="error" class="error-state">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
         </svg>
         <h3>加载失败</h3>
         <p>{{ error }}</p>
@@ -54,49 +84,68 @@
 
       <!-- 书签列表 -->
       <div v-else-if="filteredBookmarks.length > 0" class="bookmarks-list">
-        <a 
-          v-for="bookmark in displayedBookmarks" 
-          :key="bookmark.id" 
-          :href="bookmark.url" 
+        <a
+          v-for="bookmark in displayedBookmarks"
+          :key="bookmark.id"
+          :href="bookmark.url"
           class="bookmark-item"
           target="_blank"
         >
-          <img 
-            v-if="bookmark.url" 
-            :src="getFaviconUrl(bookmark.url)" 
-            class="bookmark-icon" 
+          <img
+            v-if="bookmark.url"
+            :src="getFaviconUrl(bookmark.url)"
+            class="bookmark-icon"
             @error="handleIconError($event, bookmark)"
             loading="lazy"
             :alt="bookmark.title.charAt(0)"
           />
-          <div v-else class="default-icon">
-            {{ bookmark.title.charAt(0).toUpperCase() }}
-          </div>
+          <div v-else class="default-icon">{{ bookmark.title.charAt(0).toUpperCase() }}</div>
           <span class="bookmark-title">{{ bookmark.title }}</span>
           <!-- 分享按钮 -->
           <button class="share-button" @click="shareBookmark(bookmark, $event)" title="复制/分享">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3"></circle>
-              <circle cx="6" cy="12" r="3"></circle>
-              <circle cx="18" cy="19" r="3"></circle>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="18" cy="5" r="3" />
+              <circle cx="6" cy="12" r="3" />
+              <circle cx="18" cy="19" r="3" />
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
             </svg>
           </button>
         </a>
-        
-        <div v-if="filteredBookmarks.length > maxBookmarksToShow" class="more-results">
-          还有 {{ filteredBookmarks.length - maxBookmarksToShow }} 个结果
-        </div>
+
+        <div
+          v-if="filteredBookmarks.length > maxBookmarksToShow"
+          class="more-results"
+        >还有 {{ filteredBookmarks.length - maxBookmarksToShow }} 个结果</div>
       </div>
 
       <!-- 空状态 -->
       <div v-else class="empty-state">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
         <h3>未找到书签</h3>
         <p v-if="searchText.length > 0">没有匹配"{{ searchText }}"的书签</p>
@@ -108,23 +157,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch, onUnmounted } from 'vue';
+import { ref, onMounted, computed, watch, onUnmounted } from "vue";
 
 // 状态变量
-const searchText = ref('');
+const searchText = ref("");
 const bookmarks = ref([]);
 const loading = ref(true);
 const error = ref(null);
-const searchMode = ref('title'); // 'title' | 'url'
+const searchMode = ref("title"); // 'title' | 'url'
 const maxBookmarksToShow = ref(50);
 
 // 计算属性
 const filteredBookmarks = computed(() => {
   if (!searchText.value) return bookmarks.value;
-  
+
   const searchLower = searchText.value.toLowerCase();
   return bookmarks.value.filter(bookmark => {
-    if (searchMode.value === 'title') {
+    if (searchMode.value === "title") {
       return bookmark.title.toLowerCase().includes(searchLower);
     } else {
       return bookmark.url?.toLowerCase().includes(searchLower);
@@ -141,13 +190,13 @@ async function loadBookmarks() {
   try {
     loading.value = true;
     error.value = null;
-    
+
     const chromeBookmarks = await getAllBookmarks();
     bookmarks.value = chromeBookmarks;
     console.log(`加载了 ${bookmarks.value.length} 个书签`);
   } catch (err) {
-    console.error('加载书签失败:', err);
-    error.value = '无法加载书签，请确保已授予正确权限';
+    console.error("加载书签失败:", err);
+    error.value = "无法加载书签，请确保已授予正确权限";
   } finally {
     loading.value = false;
   }
@@ -157,34 +206,34 @@ async function loadBookmarks() {
 async function getAllBookmarks() {
   return new Promise((resolve, reject) => {
     try {
-      chrome.bookmarks.getTree(async (results) => {
+      chrome.bookmarks.getTree(async results => {
         if (chrome.runtime.lastError) {
           reject(chrome.runtime.lastError);
           return;
         }
-        
+
         const allBookmarks = [];
-        const processNode = (node) => {
+        const processNode = node => {
           if (node.url) {
             allBookmarks.push({
               id: node.id,
-              title: node.title || '未命名书签',
+              title: node.title || "未命名书签",
               url: node.url,
               dateAdded: node.dateAdded
             });
           }
-          
+
           if (node.children) {
             for (const child of node.children) {
               processNode(child);
             }
           }
         };
-        
+
         for (const root of results) {
           processNode(root);
         }
-        
+
         resolve(allBookmarks);
       });
     } catch (err) {
@@ -199,16 +248,16 @@ function getFaviconUrl(url) {
     const urlObj = new URL(url);
     return `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=64`;
   } catch (e) {
-    return '';
+    return "";
   }
 }
 
 // 处理图标加载错误
 function handleIconError(event, bookmark) {
-  event.target.style.display = 'none';
+  event.target.style.display = "none";
   // 创建默认图标替代
-  const defaultIcon = document.createElement('div');
-  defaultIcon.className = 'default-icon';
+  const defaultIcon = document.createElement("div");
+  defaultIcon.className = "default-icon";
   defaultIcon.textContent = bookmark.title.charAt(0).toUpperCase();
   event.target.parentNode.insertBefore(defaultIcon, event.target.nextSibling);
 }
@@ -229,19 +278,19 @@ function debounceSearch() {
 
 // 点击搜索框产生涟漪效果
 function createRipple(event) {
-  const ripple = document.createElement('span');
-  ripple.classList.add('ripple');
-  
+  const ripple = document.createElement("span");
+  ripple.classList.add("ripple");
+
   const searchBox = event.currentTarget;
   searchBox.appendChild(ripple);
-  
+
   const rect = searchBox.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
-  
+
   ripple.style.left = `${x}px`;
   ripple.style.top = `${y}px`;
-  
+
   setTimeout(() => {
     ripple.remove();
   }, 600);
@@ -249,51 +298,54 @@ function createRipple(event) {
 
 // 切换搜索模式
 function toggleSearchMode() {
-  searchMode.value = searchMode.value === 'title' ? 'url' : 'title';
+  searchMode.value = searchMode.value === "title" ? "url" : "title";
 }
 
 // 按回车键打开第一个结果
 function openFirstResult() {
   if (filteredBookmarks.value.length > 0) {
-    window.open(filteredBookmarks.value[0].url, '_blank');
+    window.open(filteredBookmarks.value[0].url, "_blank");
   }
 }
 
 // 在组件挂载时加载书签
 onMounted(() => {
   loadBookmarks();
-  
+
   // 自动聚焦到搜索框
   setTimeout(() => {
-    const searchInput = document.querySelector('.search-input');
+    const searchInput = document.querySelector(".search-input");
     if (searchInput) {
       searchInput.focus();
     }
   }, 300);
 
   // 检查是否有来自localStorage的搜索文本
-  chrome.storage.local.get(['quickSearchText', 'showWelcome', 'installTime'], (result) => {
-    // 处理搜索文本
-    if (result.quickSearchText) {
-      searchText.value = result.quickSearchText;
-      // 用完后清除
-      chrome.storage.local.remove(['quickSearchText']);
+  chrome.storage.local.get(
+    ["quickSearchText", "showWelcome", "installTime"],
+    result => {
+      // 处理搜索文本
+      if (result.quickSearchText) {
+        searchText.value = result.quickSearchText;
+        // 用完后清除
+        chrome.storage.local.remove(["quickSearchText"]);
+      }
+
+      // 处理欢迎消息
+      if (result.showWelcome) {
+        // 显示欢迎消息
+        showWelcomeToast();
+        // 用完后清除
+        chrome.storage.local.remove(["showWelcome"]);
+      }
     }
-    
-    // 处理欢迎消息
-    if (result.showWelcome) {
-      // 显示欢迎消息
-      showWelcomeToast();
-      // 用完后清除
-      chrome.storage.local.remove(['showWelcome']);
-    }
-  });
+  );
 
   // 监听消息
-  chrome.runtime.onMessage.addListener((message) => {
-    if (message.action === 'focus_search') {
+  chrome.runtime.onMessage.addListener(message => {
+    if (message.action === "focus_search") {
       // 聚焦到搜索框
-      const searchInput = document.querySelector('.search-input');
+      const searchInput = document.querySelector(".search-input");
       if (searchInput) {
         searchInput.focus();
       }
@@ -301,35 +353,40 @@ onMounted(() => {
   });
 
   // 监听键盘快捷键
-  window.addEventListener('keydown', handleKeyDown);
+  window.addEventListener("keydown", handleKeyDown);
 });
 
 // 在组件卸载时清理
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeyDown);
+  window.removeEventListener("keydown", handleKeyDown);
   clearTimeout(searchTimeout);
 });
 
 // 处理键盘事件
 function handleKeyDown(event) {
   // ESC键清空搜索
-  if (event.key === 'Escape' && searchText.value) {
+  if (event.key === "Escape" && searchText.value) {
     event.preventDefault();
-    searchText.value = '';
-    document.querySelector('.search-input')?.focus();
+    searchText.value = "";
+    document.querySelector(".search-input")?.focus();
   }
-  
+
   // 回车键加载第一个结果
-  if (event.key === 'Enter' && filteredBookmarks.value.length > 0) {
+  if (event.key === "Enter" && filteredBookmarks.value.length > 0) {
     openFirstResult();
   }
-  
+
   // Ctrl+数字键（1-9）快速打开对应位置的书签
-  if ((event.ctrlKey || event.metaKey) && !isNaN(parseInt(event.key)) && parseInt(event.key) >= 1 && parseInt(event.key) <= 9) {
+  if (
+    (event.ctrlKey || event.metaKey) &&
+    !isNaN(parseInt(event.key)) &&
+    parseInt(event.key) >= 1 &&
+    parseInt(event.key) <= 9
+  ) {
     const index = parseInt(event.key) - 1;
     if (filteredBookmarks.value[index]) {
       event.preventDefault();
-      window.open(filteredBookmarks.value[index].url, '_blank');
+      window.open(filteredBookmarks.value[index].url, "_blank");
     }
   }
 }
@@ -338,37 +395,57 @@ function handleKeyDown(event) {
 function shareBookmark(bookmark, event) {
   event.preventDefault();
   event.stopPropagation();
-  
-  if (navigator.share) {
-    navigator.share({
-      title: bookmark.title,
-      url: bookmark.url
-    }).catch((error) => console.log('分享失败:', error));
-  } else {
-    // 复制到剪贴板
-    navigator.clipboard.writeText(bookmark.url)
-      .then(() => {
-        showCopiedToast(bookmark.title);
-      })
-      .catch(err => {
-        console.error('复制失败:', err);
-      });
+    // 使用剪贴板API复制
+    copyToClipboard(bookmark);
+
+}
+
+// 增强的剪贴板复制函数，支持多种复制方式
+function copyToClipboard(bookmark) {
+  // 方法1: 使用Clipboard API (现代浏览器)
+  // 回退到传统方法
+  fallbackCopyToClipboard(bookmark);
+}
+
+// 传统剪贴板复制方法（作为回退方案）
+function fallbackCopyToClipboard(bookmark) {
+  try {
+    // 创建一个临时输入元素
+    const tempInput = document.createElement("input");
+    tempInput.style.position = "absolute";
+    tempInput.style.left = "-9999px";
+    tempInput.value = bookmark.url;
+    document.body.appendChild(tempInput);
+
+    // 选择并复制文本
+    tempInput.select();
+    document.execCommand("copy");
+
+    // 移除临时元素
+    document.body.removeChild(tempInput);
+
+    // 显示成功消息
+    showCopiedToast(bookmark.title);
+  } catch (err) {
+    console.error("传统复制方法失败:", err);
+    // 显示错误消息
+    showErrorToast("无法复制链接，请手动复制");
   }
 }
 
 // 显示复制成功提示
 function showCopiedToast(title) {
-  const toast = document.createElement('div');
-  toast.className = 'toast';
+  const toast = document.createElement("div");
+  toast.className = "toast";
   toast.textContent = `已复制"${title}"的链接`;
   document.body.appendChild(toast);
-  
+
   setTimeout(() => {
-    toast.classList.add('show');
+    toast.classList.add("show");
   }, 10);
-  
+
   setTimeout(() => {
-    toast.classList.remove('show');
+    toast.classList.remove("show");
     setTimeout(() => {
       document.body.removeChild(toast);
     }, 300);
@@ -377,8 +454,8 @@ function showCopiedToast(title) {
 
 // 显示欢迎消息提示
 function showWelcomeToast() {
-  const toast = document.createElement('div');
-  toast.className = 'toast welcome-toast';
+  const toast = document.createElement("div");
+  toast.className = "toast welcome-toast";
   toast.innerHTML = `
     <div class="toast-content">
       <div class="toast-icon">🎉</div>
@@ -389,17 +466,36 @@ function showWelcomeToast() {
     </div>
   `;
   document.body.appendChild(toast);
-  
+
   setTimeout(() => {
-    toast.classList.add('show');
+    toast.classList.add("show");
   }, 10);
-  
+
   setTimeout(() => {
-    toast.classList.remove('show');
+    toast.classList.remove("show");
     setTimeout(() => {
       document.body.removeChild(toast);
     }, 300);
   }, 5000);
+}
+
+// 显示错误提示
+function showErrorToast(message) {
+  const toast = document.createElement("div");
+  toast.className = "toast error-toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 300);
+  }, 3000);
 }
 </script>
 
@@ -425,7 +521,9 @@ function showWelcomeToast() {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 错误状态 */
@@ -455,7 +553,11 @@ function showWelcomeToast() {
 }
 
 .retry-button {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
   color: white;
   border: none;
   padding: 8px 16px;
@@ -541,9 +643,22 @@ function showWelcomeToast() {
 .welcome-toast {
   width: 300px;
   padding: 0;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
   overflow: hidden;
   border-radius: 10px;
+}
+
+/* 错误Toast样式 */
+.error-toast {
+  background-color: rgba(231, 76, 60, 0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
 }
 
 .toast-content {
