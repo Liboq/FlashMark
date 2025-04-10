@@ -48,23 +48,50 @@ exec('npm run build', (error, stdout, stderr) => {
     fs.mkdirSync(iconsDir, { recursive: true });
   }
   
-  // Create placeholder icons
-  console.log('Creating placeholder icons...');
+  // 复制图标文件，不再创建占位图标
+  console.log('Copying icon files to dist folder...');
   
-  // Function to create a simple icon with canvas
-  const createIconPlaceholder = (size) => {
-    // This would typically create actual jpeg files
-    // For this example, we're just creating text files with descriptions
-    fs.writeFileSync(
-      path.join(iconsDir, `icon${size}.jpeg`),
-      `Placeholder for ${size}x${size} icon. Replace with actual icon.`
-    );
-  };
+  // 从public/icons复制实际图标文件
+  const publicIconsDir = path.join(__dirname, 'public', 'icons');
+  try {
+    if (fs.existsSync(publicIconsDir)) {
+      const iconFiles = fs.readdirSync(publicIconsDir);
+      
+      iconFiles.forEach(file => {
+        // 只复制真实图片文件(.png和.jpeg)，跳过txt文件
+        if (file.endsWith('.png') || file.endsWith('.jpeg') || file.endsWith('.jpg')) {
+          fs.copyFileSync(
+            path.join(publicIconsDir, file),
+            path.join(iconsDir, file)
+          );
+          console.log(`Copied icon: ${file}`);
+        }
+      });
+    } else {
+      console.warn('Warning: public/icons directory not found. Icons will be missing.');
+      // 如果找不到公共图标目录，则创建基本图标占位符
+      createBasicIconPlaceholders();
+    }
+  } catch (err) {
+    console.error('Error copying icons:', err);
+    // 出错时创建基本图标占位符
+    createBasicIconPlaceholders();
+  }
   
-  // Create placeholder icons in three sizes
-  createIconPlaceholder(16);
-  createIconPlaceholder(48);
-  createIconPlaceholder(128);
+  // 创建基本图标占位符的函数
+  function createBasicIconPlaceholders() {
+    console.log('Creating basic icon placeholders...');
+    
+    const sizes = [16, 48, 128];
+    sizes.forEach(size => {
+      // 创建一个基本的PNG图标（适当大小的空白文件不会工作）
+      // 这里我们只是在提醒时写入占位符，实际使用时应创建真实PNG
+      fs.writeFileSync(
+        path.join(iconsDir, `icon${size}.png`),
+        `This is a placeholder. Please replace with a real ${size}x${size} PNG icon.`
+      );
+    });
+  }
   
   console.log('Build completed successfully! Extension is ready in the dist folder.');
 }); 

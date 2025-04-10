@@ -41,7 +41,7 @@ function showWelcomeMessage() {
   try {
     chrome.notifications.create('welcome', {
       type: 'basic',
-      iconUrl: chrome.runtime.getURL('icons/icon128.jpeg'),
+      iconUrl: chrome.runtime.getURL('icons/icon128.png'),
       title: '书签检索已安装',
       message: '使用Ctrl+Shift+B快速打开插件，轻松搜索您的书签！',
       priority: 2
